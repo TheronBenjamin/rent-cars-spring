@@ -15,12 +15,17 @@ import java.time.LocalDate;
 @Setter
 public class Rent {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name="startDateOfRent", nullable = false)
     private LocalDate startDateOfRent;
+
+    @Column(name="endDateOfRent", nullable = false)
     private LocalDate endDateOfRent;
+
 //    private Integer numberOfDays;
+    @Column(name="description", nullable = false)
     private String description;
 //    private Float totalPrice;
 //    private Client client;
