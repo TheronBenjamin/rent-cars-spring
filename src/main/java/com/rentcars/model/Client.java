@@ -16,14 +16,25 @@ import java.util.List;
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name="firstname", nullable = false)
     private String firstname;
+
+    @Column(name="lastname", nullable = false)
     private String lastname;
+
+    @Column(name="mail", nullable = false)
     private String mail;
+
+    @Column(name="phoneNumber", nullable = false)
     private String phoneNumber;
+
+    @Column(name="address", nullable = false)
     private String address;
+
+    @Column(name="description", nullable = false)
     private String description;
 
 //    private List<Rent> rentList;
