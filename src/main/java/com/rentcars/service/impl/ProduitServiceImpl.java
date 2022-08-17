@@ -23,25 +23,39 @@ public class ProduitServiceImpl implements ProductService {
     }
 
     @Override
+    public Integer getMaxId(){
+        return productRepository.getMaxId();
+    }
+
+    @Override
     public Product getById(Integer id) {
-        return productRepository.findById(id).orElseThrow(() ->  new ProductNotFoundException(""));
+        return productRepository.findById(id).orElseThrow(() ->  new ProductNotFoundException("Product no found, Id is incorrect"));
     }
 
     @Override
     public Product create(Product product) {
-//        Product productToCreate = new Product();
-        return productRepository.save(product);
+        Product productToCreate = new Product();
+        if(productRepository.getMaxId() == null){
+            productToCreate.setId(1);
+        } else {
+            productToCreate.setId(this.getMaxId()+1);
+        }
+        productToCreate.setName(product.getName());
+        productToCreate.setBrand(product.getBrand());
+        productToCreate.setDescription(product.getDescription());
+        productToCreate.setPrice(product.getPrice());
+        productToCreate.setImgUrl(product.getImgUrl());
+        return productRepository.save(productToCreate);
     }
 
     @Override
     public Product update(Product product) {
         Product productToUpdate = this.getById(product.getId());
-        productToUpdate.setId(productToUpdate.getId());
-        productToUpdate.setName(productToUpdate.getName());
-        productToUpdate.setBrand(productToUpdate.getBrand());
-        productToUpdate.setDescription(productToUpdate.getDescription());
-        productToUpdate.setPrice(productToUpdate.getPrice());
-        productToUpdate.setImgUrl(productToUpdate.getImgUrl());
+        productToUpdate.setName(product.getName());
+        productToUpdate.setBrand(product.getBrand());
+        productToUpdate.setDescription(product.getDescription());
+        productToUpdate.setPrice(product.getPrice());
+        productToUpdate.setImgUrl(product.getImgUrl());
         return productRepository.save(productToUpdate);
     }
 
@@ -49,4 +63,5 @@ public class ProduitServiceImpl implements ProductService {
     public void delete(Integer id) {
         productRepository.deleteById(id);
     }
+
 }
