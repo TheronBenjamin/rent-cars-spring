@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  projet-db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=rent_vehicles
+    ports:
+      - "5433:5432"
