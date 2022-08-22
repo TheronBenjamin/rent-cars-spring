@@ -1,7 +1,6 @@
 package com.rentcars.api.v1;
 
 import com.rentcars.api.dto.UserDto;
-import com.rentcars.exception.UnknownResourceException;
 import com.rentcars.exception.UserNotFoundException;
 import com.rentcars.mapper.UserMapper;
 import com.rentcars.service.UserService;

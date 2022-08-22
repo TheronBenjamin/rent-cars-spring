@@ -37,6 +37,7 @@ public class Client {
     @Column(name="description", nullable = false)
     private String description;
 
-//    private List<Rent> rentList;
+    @OneToMany(mappedBy = "client")
+    private List<Rent> rentList;
 
 }

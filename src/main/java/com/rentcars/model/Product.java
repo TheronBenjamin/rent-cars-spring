@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -34,6 +35,7 @@ public class Product {
     private String imgUrl;
     // think to look how to upload an img on spring
 
-    //    private List<Rent> rentList;
+    @ManyToMany(mappedBy = "productList", fetch = FetchType.LAZY)
+    private List<Rent> rentList;
 
 }

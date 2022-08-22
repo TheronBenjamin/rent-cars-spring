@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -27,8 +28,19 @@ public class Rent {
 //    private Integer numberOfDays;
     @Column(name="description", nullable = false)
     private String description;
-//    private Float totalPrice;
-//    private Client client;
-//    private Product product ce sera une liste de produit pensez à la relation ManytoMany
+//    private Float totalPrice;*
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "rent_products",
+            joinColumns = {
+                    @JoinColumn(name = "rent_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "product_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)})
+    private List<Product> productList;
 
 }
