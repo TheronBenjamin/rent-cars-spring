@@ -61,7 +61,7 @@ public class ProductApi {
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE}
     )
-    @Operation(summary = "Create a product")
+    @Operation(summary = "Create a new product")
     @ApiResponse(responseCode = "201", description = "Created")
     public ResponseEntity<ProductDto> createProduct(@RequestBody final ProductDto productDto) {
         try {

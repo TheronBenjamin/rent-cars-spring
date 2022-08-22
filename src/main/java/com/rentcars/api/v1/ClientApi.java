@@ -59,7 +59,7 @@ public class ClientApi {
             produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE}
     )
-    @Operation(summary = "create a client")
+    @Operation(summary = "Create a new client")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Client has been created"),
             @ApiResponse(responseCode = "404", description = "Impossible to create the client")
