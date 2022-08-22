@@ -7,12 +7,13 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@Table(name = "Users")
-class User {
+@Table(name = "users")
+public class User {
+
 
     @Id
     @Column(name = "id", nullable = false)
