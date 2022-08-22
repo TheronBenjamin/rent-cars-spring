@@ -19,6 +19,12 @@ public class User {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name="mail", nullable = false)
+    private String mail;
+
+    @Column(name="phoneNumber", nullable = false)
+    private String password;
+
     @Column(name="firstname", nullable = false)
     private String firstname;
 
@@ -28,10 +34,10 @@ public class User {
     @Column(name="adress", nullable = false)
     private String adress;
 
-    @Column(name="mail", nullable = false)
-    private String mail;
-
     @Column(name="phoneNumber", nullable = false)
     private String phoneNumber;
+
+
+
 
 }
