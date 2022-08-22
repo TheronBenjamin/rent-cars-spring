@@ -58,7 +58,7 @@ public class ClientServiceImpl implements ClientService {
         clientToUpdate.setPhoneNumber(client.getPhoneNumber());
         clientToUpdate.setAddress(client.getAddress());
         clientToUpdate.setDescription(client.getDescription());
-        return clientToUpdate;
+        return clientRepository.save(clientToUpdate);
     }
 
 }

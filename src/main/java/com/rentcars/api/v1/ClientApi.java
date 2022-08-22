@@ -3,7 +3,6 @@ package com.rentcars.api.v1;
 import com.rentcars.api.dto.ClientDto;
 import com.rentcars.exception.ClientNotFoundException;
 import com.rentcars.mapper.ClientMapper;
-import com.rentcars.model.Client;
 import com.rentcars.service.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -68,6 +67,44 @@ public class ClientApi {
         ClientDto clientToSave = clientMapper.mapClientToDto(clientService.create(clientMapper.mapDtoToClient(clientDto)));
                 return ResponseEntity.created(URI.create("v1/clients/" + clientToSave.getId())).body(clientToSave);
 
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a client by the given ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Client has been deleted"),
+            @ApiResponse(responseCode = "404", description = "No client found by the given ID")
+    })
+    public void delete(@PathVariable Integer id){
+        try {
+            clientService.delete(id);
+        } catch (ClientNotFoundException ex){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage());
+        }
+    }
+    @PutMapping(path = "/{id}",
+        produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE},
+        consumes = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    @Operation(summary = "Update the client by the given ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Client have been updated"),
+            @ApiResponse(responseCode = "404", description = "Can't fin the client to update by the given ID")
+    })
+    public ResponseEntity<ClientDto> update(
+            @RequestBody ClientDto clientDto,
+            @PathVariable Integer id
+            ){
+        try {
+            clientDto.setId(id);
+            return ResponseEntity.ok(
+                    clientMapper.mapClientToDto(
+                            clientService.update(
+                                    clientMapper.mapDtoToClient(clientDto)))
+            );
+        } catch (ClientNotFoundException ex){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage());
+        }
     }
 
 }
