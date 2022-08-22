@@ -88,7 +88,10 @@ public class UserApi {
         }
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE}
+    )
     @Operation(summary = "Update the user by the given ID")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "User has been updated successfully"),
