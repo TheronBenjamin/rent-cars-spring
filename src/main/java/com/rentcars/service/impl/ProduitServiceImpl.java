@@ -35,7 +35,7 @@ public class ProduitServiceImpl implements ProductService {
     @Override
     public Product create(Product product) {
         Product productToCreate = new Product();
-        if(productRepository.getMaxId() == null){
+        if(this.getMaxId() == null){
             productToCreate.setId(1);
         } else {
             productToCreate.setId(this.getMaxId()+1);
