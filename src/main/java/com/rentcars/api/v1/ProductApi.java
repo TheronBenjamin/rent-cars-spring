@@ -79,4 +79,40 @@ public class ProductApi {
         }
     }
 
+    @DeleteMapping(path = "/{id}")
+    @Operation(summary = "Delete procuct by the given ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Product deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Can't find the product to delete by the given ID")
+                })
+    public void delete(@PathVariable Integer id){
+        try {
+            productService.delete(id);
+            ResponseEntity.noContent().build();
+        } catch (ProductNotFoundException ex){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage());
+        }
+    }
+
+    @PutMapping(path = "/{id}")
+    @Operation(summary = "Update the product by the given ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Product succesffully updated"),
+            @ApiResponse(responseCode = "404", description = "Can't find the product by the given ID")
+
+    })
+    public ResponseEntity<ProductDto> update(
+            @RequestBody ProductDto productDto,
+            @PathVariable Integer id
+    ) {
+        try{
+            productDto.setId(id);
+            return ResponseEntity.ok(productMapper.mapProductToDto(
+                    productService.update(
+                            productMapper.mapToProduct(productDto)))
+            );
+        } catch (ProductNotFoundException ex){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage());
+        }
+    }
 }
