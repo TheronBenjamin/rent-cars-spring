@@ -20,6 +20,7 @@ import java.util.List;
 @RequestMapping("v1/clients")
 public class ClientApi {
 
+//    test
     private final ClientService clientService;
     private final ClientMapper clientMapper;
 
