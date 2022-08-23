@@ -29,7 +29,9 @@ public class ProduitServiceImpl implements ProductService {
 
     @Override
     public Product getById(Integer id) {
-        return productRepository.findById(id).orElseThrow(() ->  new ProductNotFoundException("Product no found, Id is incorrect"));
+        return productRepository.findById(id).orElseThrow(
+                () ->  new ProductNotFoundException("Product no found, Id is incorrect")
+        );
     }
 
     @Override
@@ -46,6 +48,15 @@ public class ProduitServiceImpl implements ProductService {
         productToCreate.setPrice(product.getPrice());
         productToCreate.setImgUrl(product.getImgUrl());
         return productRepository.save(productToCreate);
+//        final Worksite createdWorkSite = this.worksiteRepository.save(worksite);
+//        new ArrayList<>(createdWorkSite.getTechnicians()).forEach(
+//                technician -> this.technicianRepository.findById(technician.getId()).ifPresent(
+//                        tech -> {
+//                            tech.getWorksites().add(createdWorkSite);
+//                            this.technicianRepository.saveAndFlush(tech);
+//                        }
+//                )
+//        );
     }
 
     @Override
