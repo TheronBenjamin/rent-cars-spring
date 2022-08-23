@@ -29,7 +29,7 @@ public class RentServiceImpl implements RentService {
 
     @Override
     public Integer getMaxId() {
-        return null;
+        return rentRepository.getMaxId();
     }
 
     @Override

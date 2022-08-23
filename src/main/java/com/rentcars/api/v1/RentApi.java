@@ -1,6 +1,5 @@
 package com.rentcars.api.v1;
 
-import com.rentcars.api.dto.ProductDto;
 import com.rentcars.api.dto.RentDto;
 import com.rentcars.exception.ProductNotFoundException;
 import com.rentcars.exception.UnknownResourceException;
@@ -31,7 +30,7 @@ public class RentApi {
     }
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    @Operation(summary = "Get all the products to rent")
+    @Operation(summary = "Get all the rents")
     public ResponseEntity<List<RentDto>> getAll(){
         return ResponseEntity.ok(
                 this.rentService.getAll().stream()
@@ -42,10 +41,10 @@ public class RentApi {
 
 
     @GetMapping(path = "/{id}" , produces = {MediaType.APPLICATION_JSON_VALUE})
-    @Operation(summary = "Get a product to rent by is ID")
+    @Operation(summary = "Get a rent by is ID")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Return the product found the given ID"),
-            @ApiResponse(responseCode = "404", description = "No product found by the given ID")
+            @ApiResponse(responseCode = "200", description = "Return the rent found the given ID"),
+            @ApiResponse(responseCode = "404", description = "No rent found by the given ID")
     })
     public ResponseEntity<RentDto> getById(@PathVariable Integer id){
         try {
@@ -62,7 +61,7 @@ public class RentApi {
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE}
     )
-    @Operation(summary = "Create a new product")
+    @Operation(summary = "Create a new rent")
     @ApiResponse(responseCode = "201", description = "Created")
     public ResponseEntity<RentDto> createProduct(@RequestBody final RentDto rentDto) {
         try {
@@ -73,7 +72,7 @@ public class RentApi {
                             ));
 
             return ResponseEntity
-                    .created(URI.create("/v1/products/" + rentDtoResponse.getId()))
+                    .created(URI.create("/v1/rents/" + rentDtoResponse.getId()))
                     .body(rentDtoResponse);
         } catch (UnknownResourceException ure) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ure.getMessage());
@@ -81,10 +80,10 @@ public class RentApi {
     }
 
     @DeleteMapping(path = "/{id}")
-    @Operation(summary = "Delete procuct by the given ID")
+    @Operation(summary = "Delete rent by the given ID")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Product deleted successfully"),
-            @ApiResponse(responseCode = "404", description = "Can't find the product to delete by the given ID")
+            @ApiResponse(responseCode = "200", description = "Rent deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Can't find the rent to delete by the given ID")
     })
     public void delete(@PathVariable Integer id){
         try {
@@ -96,10 +95,10 @@ public class RentApi {
     }
 
     @PutMapping(path = "/{id}")
-    @Operation(summary = "Update the product by the given ID")
+    @Operation(summary = "Update the rent by the given ID")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Product succesffully updated"),
-            @ApiResponse(responseCode = "404", description = "Can't find the product by the given ID")
+            @ApiResponse(responseCode = "200", description = "Rent succesffully updated"),
+            @ApiResponse(responseCode = "404", description = "Can't find the rent by the given ID")
 
     })
     public ResponseEntity<RentDto> update(

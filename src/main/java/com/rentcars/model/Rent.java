@@ -33,14 +33,9 @@ public class Rent {
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "rent_products",
-            joinColumns = {
-                    @JoinColumn(name = "rent_id", referencedColumnName = "id",
-                            nullable = false, updatable = false)},
-            inverseJoinColumns = {
-                    @JoinColumn(name = "product_id", referencedColumnName = "id",
-                            nullable = false, updatable = false)})
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(joinColumns={@JoinColumn(name="rent_id")},
+            inverseJoinColumns = {@JoinColumn(name="product_id")})
     private List<Product> productList;
 
 }

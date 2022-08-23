@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface RentRepository extends JpaRepository<Rent, Integer> {
 
     @Query("SELECT MAX(id) FROM Rent")
-    public Integer getMaxID();
+    public Integer getMaxId();
 
 }

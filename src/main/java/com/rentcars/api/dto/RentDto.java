@@ -20,7 +20,7 @@ public class RentDto {
     private LocalDate startDateOfRent;
     private LocalDate endDateOfRent;
     private String description;
-    private Client client;
-    private List<Product> productList;
+    private Integer clientId;
+    private List<ProductDto> products;
 
 }
