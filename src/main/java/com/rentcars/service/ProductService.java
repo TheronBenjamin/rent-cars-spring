@@ -1,6 +1,7 @@
 package com.rentcars.service;
 
 import com.rentcars.model.Product;
+import com.rentcars.model.Rent;
 
 import java.util.List;
 

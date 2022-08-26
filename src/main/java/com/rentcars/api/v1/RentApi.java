@@ -4,6 +4,8 @@ import com.rentcars.api.dto.RentDto;
 import com.rentcars.exception.ProductNotFoundException;
 import com.rentcars.exception.UnknownResourceException;
 import com.rentcars.mapper.RentMapper;
+import com.rentcars.model.Product;
+import com.rentcars.service.ProductService;
 import com.rentcars.service.RentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,10 +24,13 @@ import java.util.List;
 public class RentApi {
 
     private final RentService rentService;
+    private final ProductService productService;
     private final RentMapper rentMapper;
 
-    public RentApi(RentService rentService, RentMapper rentMapper) {
+
+    public RentApi(RentService rentService, ProductService productService, RentMapper rentMapper) {
         this.rentService = rentService;
+        this.productService = productService;
         this.rentMapper = rentMapper;
     }
 
@@ -58,17 +63,22 @@ public class RentApi {
 
 
     @PostMapping(
+            path = "/product/{id}",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE}
     )
     @Operation(summary = "Create a new rent")
     @ApiResponse(responseCode = "201", description = "Created")
-    public ResponseEntity<RentDto> createProduct(@RequestBody final RentDto rentDto) {
+    public ResponseEntity<RentDto> createProduct(
+            @RequestBody final RentDto rentDto,
+            @PathVariable final Integer id
+    ) {
         try {
+            Product product = productService.getById(id);
             RentDto rentDtoResponse =
                     this.rentMapper.mapRentToDto(
                             this.rentService.create(
-                                    this.rentMapper.mapDtoToRent(rentDto)
+                                    this.rentMapper.mapDtoToRent(rentDto),product
                             ));
 
             return ResponseEntity

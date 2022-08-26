@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -36,6 +37,9 @@ public class Rent {
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(joinColumns={@JoinColumn(name="rent_id")},
             inverseJoinColumns = {@JoinColumn(name="product_id")})
-    private List<Product> productList;
+    private List<Product> productList = new ArrayList<>();
 
+    public void enrolledProduct(Product product){
+        productList.add(product);
+    }
 }

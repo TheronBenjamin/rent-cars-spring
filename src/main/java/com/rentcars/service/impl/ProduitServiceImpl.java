@@ -2,7 +2,9 @@ package com.rentcars.service.impl;
 
 import com.rentcars.exception.ProductNotFoundException;
 import com.rentcars.model.Product;
+import com.rentcars.model.Rent;
 import com.rentcars.repository.ProductRepository;
+import com.rentcars.repository.RentRepository;
 import com.rentcars.service.ProductService;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,11 @@ import java.util.List;
 public class ProduitServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final RentRepository rentRepository;
 
-    public ProduitServiceImpl(ProductRepository productRepository) {
+    public ProduitServiceImpl(ProductRepository productRepository, RentRepository rentRepository) {
         this.productRepository = productRepository;
+        this.rentRepository = rentRepository;
     }
 
     @Override
@@ -48,15 +52,6 @@ public class ProduitServiceImpl implements ProductService {
         productToCreate.setPrice(product.getPrice());
         productToCreate.setImgUrl(product.getImgUrl());
         return productRepository.save(productToCreate);
-//        final Worksite createdWorkSite = this.worksiteRepository.save(worksite);
-//        new ArrayList<>(createdWorkSite.getTechnicians()).forEach(
-//                technician -> this.technicianRepository.findById(technician.getId()).ifPresent(
-//                        tech -> {
-//                            tech.getWorksites().add(createdWorkSite);
-//                            this.technicianRepository.saveAndFlush(tech);
-//                        }
-//                )
-//        );
     }
 
     @Override

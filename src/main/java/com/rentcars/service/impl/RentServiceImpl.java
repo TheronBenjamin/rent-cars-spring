@@ -1,20 +1,26 @@
 package com.rentcars.service.impl;
 
+import com.rentcars.exception.ProductNotFoundException;
 import com.rentcars.exception.RentNotFoundException;
+import com.rentcars.model.Product;
 import com.rentcars.model.Rent;
+import com.rentcars.repository.ProductRepository;
 import com.rentcars.repository.RentRepository;
 import com.rentcars.service.RentService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class RentServiceImpl implements RentService {
 
     private final RentRepository rentRepository;
+    private final ProductRepository productRepository;
 
-    public RentServiceImpl(RentRepository rentRepository) {
+    public RentServiceImpl(RentRepository rentRepository, ProductRepository productRepository) {
         this.rentRepository = rentRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
@@ -33,7 +39,7 @@ public class RentServiceImpl implements RentService {
     }
 
     @Override
-    public Rent create(Rent rent) {
+    public Rent create(Rent rent, Product product) {
         Rent rentToCreate = new Rent();
         if(this.getMaxId() == null){
             rentToCreate.setId(1);
@@ -45,6 +51,11 @@ public class RentServiceImpl implements RentService {
         rentToCreate.setStartDateOfRent(rent.getStartDateOfRent());
         rentToCreate.setClient(rent.getClient());
         rentToCreate.setProductList(rent.getProductList());
+
+        Product productToAdd = productRepository.findById(product.getId())
+                .orElseThrow(() -> new ProductNotFoundException("No product find by the id given"));
+
+        rentToCreate.enrolledProduct(productToAdd);
 
         return rentRepository.save(rentToCreate);
     }
@@ -65,4 +76,9 @@ public class RentServiceImpl implements RentService {
         rentRepository.deleteById(id);
     }
 
+    @Override
+    public Rent enrollProductRent(Product product, Rent rent) {
+
+        return rentRepository.save(rent);
+    }
 }
