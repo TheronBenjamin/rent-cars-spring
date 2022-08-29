@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RentProductDto {
 
+    private Integer id;
     private String name;
     private String brand;
     private String description;

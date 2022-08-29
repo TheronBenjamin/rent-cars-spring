@@ -1,10 +1,11 @@
 package com.rentcars.api.v1;
 
+import com.rentcars.api.dto.ProductDto;
 import com.rentcars.api.dto.RentDto;
 import com.rentcars.exception.ProductNotFoundException;
 import com.rentcars.exception.UnknownResourceException;
+import com.rentcars.mapper.ProductMapper;
 import com.rentcars.mapper.RentMapper;
-import com.rentcars.model.Product;
 import com.rentcars.service.ProductService;
 import com.rentcars.service.RentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,12 +27,15 @@ public class RentApi {
     private final RentService rentService;
     private final ProductService productService;
     private final RentMapper rentMapper;
+    private final ProductMapper productMapper;
 
 
-    public RentApi(RentService rentService, ProductService productService, RentMapper rentMapper) {
+
+    public RentApi(RentService rentService, ProductService productService, RentMapper rentMapper, ProductMapper productMapper) {
         this.rentService = rentService;
         this.productService = productService;
         this.rentMapper = rentMapper;
+        this.productMapper = productMapper;
     }
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -74,16 +78,14 @@ public class RentApi {
             @PathVariable final Integer id
     ) {
         try {
-            Product product = productService.getById(id);
-            RentDto rentDtoResponse =
+            ProductDto productDto = productMapper.mapProductToDto(productService.getById(id));
+            return ResponseEntity.ok (
                     this.rentMapper.mapRentToDto(
                             this.rentService.create(
-                                    this.rentMapper.mapDtoToRent(rentDto),product
-                            ));
+                                    this.rentMapper.mapDtoToRent(rentDto), productMapper.mapToProduct(productDto)
+                            )));
 
-            return ResponseEntity
-                    .created(URI.create("/v1/rents/" + rentDtoResponse.getId()))
-                    .body(rentDtoResponse);
+
         } catch (UnknownResourceException ure) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ure.getMessage());
         }

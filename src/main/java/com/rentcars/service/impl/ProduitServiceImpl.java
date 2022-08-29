@@ -2,12 +2,10 @@ package com.rentcars.service.impl;
 
 import com.rentcars.exception.ProductNotFoundException;
 import com.rentcars.model.Product;
-import com.rentcars.model.Rent;
 import com.rentcars.repository.ProductRepository;
 import com.rentcars.repository.RentRepository;
 import com.rentcars.service.ProductService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -15,7 +13,6 @@ public class ProduitServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final RentRepository rentRepository;
-
     public ProduitServiceImpl(ProductRepository productRepository, RentRepository rentRepository) {
         this.productRepository = productRepository;
         this.rentRepository = rentRepository;

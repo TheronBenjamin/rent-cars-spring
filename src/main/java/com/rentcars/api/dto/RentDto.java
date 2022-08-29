@@ -23,4 +23,15 @@ public class RentDto {
     private Integer clientId;
     private List<ProductDto> products;
 
+    @Override
+    public String toString() {
+        return "RentDto{" +
+                "id=" + id +
+                ", startDateOfRent=" + startDateOfRent +
+                ", endDateOfRent=" + endDateOfRent +
+                ", description='" + description + '\'' +
+                ", clientId=" + clientId +
+                ", products=" + products +
+                '}';
+    }
 }

@@ -8,6 +8,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.springframework.stereotype.Component;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,21 +21,4 @@ public interface ProductMapper {
     @Mapping(source = "id" , target = "id")
     Product mapToProduct(ProductDto productDto);
 
-    @Mapping(target = "rents", expression = "java(getRents(product))")
-    default List<RentDto> getRents(Product product) {
-        List<RentDto> rents = new ArrayList<>();
-        if (product.getRentList() != null) {
-            rents = product.getRentList().stream()
-                    .map(rent -> new RentDto(
-                            rent.getId(),
-                            rent.getStartDateOfRent(),
-                            rent.getEndDateOfRent(),
-                            rent.getDescription(),
-                            rent.getClient().getId(),
-                            rent.getProductList().stream().map(this::mapProductToDto).toList()
-                            ))
-                    .toList();
-        }
-        return rents;
-    }
 }

@@ -20,5 +20,18 @@ public class ProductDto {
     private String description;
     private Float price;
     private String imgUrl;
-//    private List<Rent> rents;
+//    private List<RentDto> rents;
+
+
+    @Override
+    public String toString() {
+        return "ProductDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", brand='" + brand + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", imgUrl='" + imgUrl + '\'' +
+                '}';
+    }
 }

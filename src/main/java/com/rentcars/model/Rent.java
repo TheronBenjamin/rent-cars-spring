@@ -7,8 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -37,9 +36,20 @@ public class Rent {
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(joinColumns={@JoinColumn(name="rent_id")},
             inverseJoinColumns = {@JoinColumn(name="product_id")})
-    private List<Product> productList = new ArrayList<>();
+    private Set<Product> productList;
 
     public void enrolledProduct(Product product){
-        productList.add(product);
+        this.productList.add(product);
+    }
+
+    @Override
+    public String toString() {
+        return "Rent{" +
+                "id=" + id +
+                ", startDateOfRent=" + startDateOfRent +
+                ", endDateOfRent=" + endDateOfRent +
+                ", description='" + description + '\'' +
+                ", client=" + client +
+                '}';
     }
 }

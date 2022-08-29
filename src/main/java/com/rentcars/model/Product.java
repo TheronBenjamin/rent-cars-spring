@@ -1,5 +1,7 @@
 package com.rentcars.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,10 +15,12 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Product {
 
     @Id
     @Column(name="id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name="name", nullable = false)
@@ -34,8 +38,19 @@ public class Product {
     @Column(name="imgUrl", nullable = false)
     private String imgUrl;
     // think to look how to upload an img on spring
+    @ManyToMany(mappedBy = "productList")
+    List<Rent> rentList;
 
-    @ManyToMany(mappedBy = "productList", fetch = FetchType.LAZY)
-    private List<Rent> rentList;
-
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", brand='" + brand + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", rentList=" + rentList +
+                '}';
+    }
 }

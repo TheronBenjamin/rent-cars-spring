@@ -9,8 +9,9 @@ import com.rentcars.repository.RentRepository;
 import com.rentcars.service.RentService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class RentServiceImpl implements RentService {
@@ -51,13 +52,13 @@ public class RentServiceImpl implements RentService {
         rentToCreate.setStartDateOfRent(rent.getStartDateOfRent());
         rentToCreate.setClient(rent.getClient());
         rentToCreate.setProductList(rent.getProductList());
-
         Product productToAdd = productRepository.findById(product.getId())
                 .orElseThrow(() -> new ProductNotFoundException("No product find by the id given"));
+        Set<Product> products = new HashSet<>();
+        products.add(productToAdd);
+        rentToCreate.setProductList(products);
 
-        rentToCreate.enrolledProduct(productToAdd);
-
-        return rentRepository.save(rentToCreate);
+        return this.rentRepository.save(rentToCreate);
     }
 
     @Override
